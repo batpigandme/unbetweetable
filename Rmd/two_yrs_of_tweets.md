@@ -4,7 +4,7 @@ Mara Averick
 
 
 
-Updated: 2017-06-15
+Updated: 2017-06-16
 
 ## Motivation
 
@@ -130,7 +130,7 @@ ggplot(data = tweets, aes(x = wday(timestamp, label = TRUE))) +
         theme(legend.position = "none") +
         labs(title = "@dataandme tweets by day of the week",
              x = "days of the week",
-             caption = "Extracted from Twitter archive 017-06-15") +
+             caption = "Extracted from Twitter archive 2017-06-15") +
         theme_ipsum_rc()
 ```
 
@@ -184,32 +184,27 @@ frequency <- tidy_tweets %>%
               summarise(total = n())) %>%
   mutate(freq = n/total)
 
-frequency
+library(pander)
+pandoc.table(top_n(frequency, 5), style = "rmarkdown")
 ```
 
 ```
-## # A tibble: 23,383 x 5
-## # Groups:   person [1]
-##    person         word     n  total        freq
-##     <chr>        <chr> <int>  <int>       <dbl>
-##  1   Mara      #rstats  1697 109702 0.015469180
-##  2   Mara     #dataviz  1427 109702 0.013007967
-##  3   Mara         data  1015 109702 0.009252338
-##  4   Mara        icymi   482 109702 0.004393721
-##  5   Mara @tanyacash21   459 109702 0.004184062
-##  6   Mara         love   420 109702 0.003828554
-##  7   Mara         time   353 109702 0.003217808
-##  8   Mara         read   343 109702 0.003126652
-##  9   Mara         yeah   339 109702 0.003090190
-## 10   Mara         code   316 109702 0.002880531
-## # ... with 23,373 more rows
+## 
+## 
+## | person |     word     |  n   | total  |   freq   |
+## |:------:|:------------:|:----:|:------:|:--------:|
+## |  Mara  |   #rstats    | 1697 | 109702 | 0.01547  |
+## |  Mara  |   #dataviz   | 1427 | 109702 | 0.01301  |
+## |  Mara  |     data     | 1015 | 109702 | 0.009252 |
+## |  Mara  |    icymi     | 482  | 109702 | 0.004394 |
+## |  Mara  | @tanyacash21 | 459  | 109702 | 0.004184 |
 ```
 
 
 ```r
 tidy_tweets <- tidy_tweets %>%
   filter(timestamp >= as.Date("2016-05-1"),
-         timestamp < as.Date("2017-05-17"))
+         timestamp < as.Date("2017-06-15"))
 ```
 
 
@@ -231,20 +226,20 @@ words_by_time
 ```
 
 ```
-## # A tibble: 2,614 x 6
+## # A tibble: 3,281 x 6
 ##    time_floor person             word count time_total word_total
 ##        <dttm>  <chr>            <chr> <int>      <int>      <int>
-##  1 2016-05-01   Mara            #d3js     3       3176         46
-##  2 2016-05-01   Mara         #datasci     3       3176         50
-##  3 2016-05-01   Mara         #dataviz    67       3176        851
-##  4 2016-05-01   Mara             #ddj     2       3176         61
-##  5 2016-05-01   Mara         #ggplot2     4       3176         40
-##  6 2016-05-01   Mara #machinelearning     5       3176         69
-##  7 2016-05-01   Mara            #maps     8       3176         90
+##  1 2016-05-01   Mara            #d3js     3       3176         50
+##  2 2016-05-01   Mara         #datasci     3       3176         53
+##  3 2016-05-01   Mara         #dataviz    67       3176        905
+##  4 2016-05-01   Mara             #ddj     2       3176         63
+##  5 2016-05-01   Mara         #ggplot2     4       3176         44
+##  6 2016-05-01   Mara #machinelearning     5       3176         72
+##  7 2016-05-01   Mara            #maps     8       3176        106
 ##  8 2016-05-01   Mara           #maths     4       3176         31
-##  9 2016-05-01   Mara             #nba     7       3176        132
-## 10 2016-05-01   Mara       #nerdhumor     6       3176         50
-## # ... with 2,604 more rows
+##  9 2016-05-01   Mara             #nba     7       3176        135
+## 10 2016-05-01   Mara       #nerdhumor     6       3176         56
+## # ... with 3,271 more rows
 ```
 
 
@@ -256,20 +251,20 @@ nested_data
 ```
 
 ```
-## # A tibble: 215 x 3
+## # A tibble: 253 x 3
 ##    person             word              data
 ##     <chr>            <chr>            <list>
-##  1   Mara            #d3js <tibble [12 x 4]>
-##  2   Mara         #datasci <tibble [13 x 4]>
-##  3   Mara         #dataviz <tibble [13 x 4]>
-##  4   Mara             #ddj <tibble [12 x 4]>
-##  5   Mara         #ggplot2 <tibble [12 x 4]>
-##  6   Mara #machinelearning <tibble [13 x 4]>
-##  7   Mara            #maps <tibble [13 x 4]>
+##  1   Mara            #d3js <tibble [13 x 4]>
+##  2   Mara         #datasci <tibble [14 x 4]>
+##  3   Mara         #dataviz <tibble [14 x 4]>
+##  4   Mara             #ddj <tibble [14 x 4]>
+##  5   Mara         #ggplot2 <tibble [14 x 4]>
+##  6   Mara #machinelearning <tibble [14 x 4]>
+##  7   Mara            #maps <tibble [14 x 4]>
 ##  8   Mara           #maths <tibble [12 x 4]>
-##  9   Mara             #nba <tibble [13 x 4]>
-## 10   Mara       #nerdhumor <tibble [13 x 4]>
-## # ... with 205 more rows
+##  9   Mara             #nba <tibble [14 x 4]>
+## 10   Mara       #nerdhumor <tibble [14 x 4]>
+## # ... with 243 more rows
 ```
 
 
@@ -284,20 +279,20 @@ nested_models
 ```
 
 ```
-## # A tibble: 215 x 4
+## # A tibble: 253 x 4
 ##    person             word              data    models
 ##     <chr>            <chr>            <list>    <list>
-##  1   Mara            #d3js <tibble [12 x 4]> <S3: glm>
-##  2   Mara         #datasci <tibble [13 x 4]> <S3: glm>
-##  3   Mara         #dataviz <tibble [13 x 4]> <S3: glm>
-##  4   Mara             #ddj <tibble [12 x 4]> <S3: glm>
-##  5   Mara         #ggplot2 <tibble [12 x 4]> <S3: glm>
-##  6   Mara #machinelearning <tibble [13 x 4]> <S3: glm>
-##  7   Mara            #maps <tibble [13 x 4]> <S3: glm>
+##  1   Mara            #d3js <tibble [13 x 4]> <S3: glm>
+##  2   Mara         #datasci <tibble [14 x 4]> <S3: glm>
+##  3   Mara         #dataviz <tibble [14 x 4]> <S3: glm>
+##  4   Mara             #ddj <tibble [14 x 4]> <S3: glm>
+##  5   Mara         #ggplot2 <tibble [14 x 4]> <S3: glm>
+##  6   Mara #machinelearning <tibble [14 x 4]> <S3: glm>
+##  7   Mara            #maps <tibble [14 x 4]> <S3: glm>
 ##  8   Mara           #maths <tibble [12 x 4]> <S3: glm>
-##  9   Mara             #nba <tibble [13 x 4]> <S3: glm>
-## 10   Mara       #nerdhumor <tibble [13 x 4]> <S3: glm>
-## # ... with 205 more rows
+##  9   Mara             #nba <tibble [14 x 4]> <S3: glm>
+## 10   Mara       #nerdhumor <tibble [14 x 4]> <S3: glm>
+## # ... with 243 more rows
 ```
 
 
@@ -319,15 +314,18 @@ top_slopes
 ```
 
 ```
-## # A tibble: 6 x 8
-##   person    word       term     estimate    std.error statistic
-##    <chr>   <chr>      <chr>        <dbl>        <dbl>     <dbl>
-## 1   Mara #rstats time_floor 1.879405e-08 3.005724e-09  6.252754
-## 2   Mara  archer time_floor 4.198472e-08 1.095402e-08  3.832815
-## 3   Mara      bc time_floor 4.638021e-08 1.125518e-08  4.120788
-## 4   Mara    code time_floor 3.571089e-08 7.230665e-09  4.938810
-## 5   Mara  hahaha time_floor 6.687466e-08 1.597319e-08  4.186682
-## 6   Mara    step time_floor 4.344980e-08 8.320341e-09  5.222118
+## # A tibble: 9 x 8
+##   person        word       term      estimate    std.error statistic
+##    <chr>       <chr>      <chr>         <dbl>        <dbl>     <dbl>
+## 1   Mara    #dataviz time_floor -1.250745e-08 3.196791e-09 -3.912501
+## 2   Mara     #rstats time_floor  1.843122e-08 2.637880e-09  6.987131
+## 3   Mara #statistics time_floor -6.301785e-08 1.616911e-08 -3.897423
+## 4   Mara      archer time_floor  3.563482e-08 9.573770e-09  3.722130
+## 5   Mara          bc time_floor  4.425626e-08 9.736805e-09  4.545255
+## 6   Mara        code time_floor  3.564477e-08 6.290764e-09  5.666207
+## 7   Mara      hahaha time_floor  5.378589e-08 1.363875e-08  3.943607
+## 8   Mara        step time_floor  3.672662e-08 7.247291e-09  5.067634
+## 9   Mara      #polog time_floor -5.249564e-08 1.337752e-08 -3.924167
 ## # ... with 2 more variables: p.value <dbl>, adjusted.p.value <dbl>
 ```
 
@@ -358,8 +356,8 @@ library(DT)
 datatable(thankees)
 ```
 
-<!--html_preserve--><div id="htmlwidget-475a5d55e012dfd94524" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-475a5d55e012dfd94524">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36"],["Hadley Wickham &lt;hadley@rstudio.com&gt;","R Core Team &lt;R-core@r-project.org&gt;","Kirill Müller &lt;krlmlr+r@mailbox.org&gt;","Winston Chang &lt;winston@stdout.org&gt;","Lionel Henry &lt;lionel@rstudio.com&gt;","Julia Silge &lt;julia.silge@gmail.com&gt;","Yihui Xie &lt;xie@yihui.name&gt;","Dirk Eddelbuettel &lt;edd@debian.org&gt;","JJ Allaire &lt;jj@rstudio.com&gt;","Bob Rudis &lt;bob@rud.is&gt;","Hadley Wickham &lt;h.wickham@gmail.com&gt;","Deepayan Sarkar &lt;deepayan.sarkar@r-project.org&gt;","Achim Zeileis &lt;Achim.Zeileis@R-project.org&gt;","Milan Bouchet-Valat &lt;nalimilan@club.fr&gt;","Joe Cheng &lt;joe@rstudio.com&gt;","Jeremy Stephens &lt;jeremy.stephens@vanderbilt.edu&gt;","R Core Team &lt;R-core@R-project.org&gt;","Jim Hester &lt;james.f.hester@gmail.com&gt;","Jennifer Bryan &lt;jenny@rstudio.com&gt;","Charlotte Wickham &lt;cwickham@gmail.com&gt;","Jennifer Bryan &lt;jenny@stat.ubc.ca&gt;","William Revelle &lt;revelle@northwestern.edu&gt;","Justin Talbot &lt;justintalbot@gmail.com&gt;","Lincoln Mullen &lt;lincoln@lincolnmullen.com&gt;","David Robinson &lt;admiral.david@gmail.com&gt;","Jim Hester &lt;james.hester@rstudio.com&gt;","Michel Lang &lt;michellang@gmail.com&gt;","Jeroen Ooms &lt;jeroen@berkeley.edu&gt;","Adelchi Azzalini &lt;adelchi.azzalini@unipd.it&gt;","Marek Gagolewski &lt;gagolews@rexamine.com&gt;","Stefan Milton Bache &lt;stefan@stefanbache.dk&gt;","Gábor Csárdi &lt;csardi.gabor@gmail.com&gt;","Martin Maechler &lt;mmaechler+Matrix@gmail.com&gt;","James Hester &lt;james.hester@rstudio.com&gt;","Vitalie Spinu &lt;spinuvit@gmail.com&gt;","R-core &lt;R-core@R-project.org&gt;"],[15,11,5,4,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],["assertthat, dplyr, forcats, ggplot2, gtable, haven, httr, lazyeval, modelr, plyr, rvest, scales, stringr, tidyr, tidyverse","base, compiler, datasets, graphics, grDevices, grid, methods, parallel, stats, tools, utils","bindr, bindrcpp, hms, rprojroot, tibble","extrafont, extrafontdb, R6, Rttf2pt1","purrr, rlang","janeaustenr, tidytext","evaluate, knitr","digest, Rcpp","rmarkdown, rstudioapi","hrbrthemes","reshape2","lattice","colorspace","SnowballC","htmltools","yaml","foreign","glue","readxl","munsell","cellranger","psych","labeling","tokenizers","broom","readr","backports","jsonlite","mnormt","stringi","magrittr","pkgconfig","Matrix","xml2","lubridate","nlme"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>maintainer<\/th>\n      <th>no_packages<\/th>\n      <th>packages<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"crosstalkOptions":{"key":null,"group":null},"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-133860879e5f45eeb3e5" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-133860879e5f45eeb3e5">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37"],["Hadley Wickham &lt;hadley@rstudio.com&gt;","R Core Team &lt;R-core@r-project.org&gt;","Kirill Müller &lt;krlmlr+r@mailbox.org&gt;","Winston Chang &lt;winston@stdout.org&gt;","Lionel Henry &lt;lionel@rstudio.com&gt;","Julia Silge &lt;julia.silge@gmail.com&gt;","Yihui Xie &lt;xie@yihui.name&gt;","Dirk Eddelbuettel &lt;edd@debian.org&gt;","JJ Allaire &lt;jj@rstudio.com&gt;","Bob Rudis &lt;bob@rud.is&gt;","Gergely Daróczi &lt;daroczig@rapporter.net&gt;","Hadley Wickham &lt;h.wickham@gmail.com&gt;","Deepayan Sarkar &lt;deepayan.sarkar@r-project.org&gt;","Achim Zeileis &lt;Achim.Zeileis@R-project.org&gt;","Milan Bouchet-Valat &lt;nalimilan@club.fr&gt;","Joe Cheng &lt;joe@rstudio.com&gt;","Jeremy Stephens &lt;jeremy.stephens@vanderbilt.edu&gt;","R Core Team &lt;R-core@R-project.org&gt;","Jim Hester &lt;james.f.hester@gmail.com&gt;","Jennifer Bryan &lt;jenny@rstudio.com&gt;","Charlotte Wickham &lt;cwickham@gmail.com&gt;","Jennifer Bryan &lt;jenny@stat.ubc.ca&gt;","William Revelle &lt;revelle@northwestern.edu&gt;","Justin Talbot &lt;justintalbot@gmail.com&gt;","Lincoln Mullen &lt;lincoln@lincolnmullen.com&gt;","David Robinson &lt;admiral.david@gmail.com&gt;","Jim Hester &lt;james.hester@rstudio.com&gt;","Michel Lang &lt;michellang@gmail.com&gt;","Jeroen Ooms &lt;jeroen@berkeley.edu&gt;","Adelchi Azzalini &lt;adelchi.azzalini@unipd.it&gt;","Marek Gagolewski &lt;gagolews@rexamine.com&gt;","Stefan Milton Bache &lt;stefan@stefanbache.dk&gt;","Gábor Csárdi &lt;csardi.gabor@gmail.com&gt;","Martin Maechler &lt;mmaechler+Matrix@gmail.com&gt;","James Hester &lt;james.hester@rstudio.com&gt;","Vitalie Spinu &lt;spinuvit@gmail.com&gt;","R-core &lt;R-core@R-project.org&gt;"],[15,11,5,4,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],["assertthat, dplyr, forcats, ggplot2, gtable, haven, httr, lazyeval, modelr, plyr, rvest, scales, stringr, tidyr, tidyverse","base, compiler, datasets, graphics, grDevices, grid, methods, parallel, stats, tools, utils","bindr, bindrcpp, hms, rprojroot, tibble","extrafont, extrafontdb, R6, Rttf2pt1","purrr, rlang","janeaustenr, tidytext","evaluate, knitr","digest, Rcpp","rmarkdown, rstudioapi","hrbrthemes","pander","reshape2","lattice","colorspace","SnowballC","htmltools","yaml","foreign","glue","readxl","munsell","cellranger","psych","labeling","tokenizers","broom","readr","backports","jsonlite","mnormt","stringi","magrittr","pkgconfig","Matrix","xml2","lubridate","nlme"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>maintainer<\/th>\n      <th>no_packages<\/th>\n      <th>packages<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"crosstalkOptions":{"key":null,"group":null},"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
 
 
 ```r
@@ -368,7 +366,7 @@ praise::praise()
 ```
 
 ```
-## [1] "You are fine!"
+## [1] "You are bedazzling!"
 ```
 
 
