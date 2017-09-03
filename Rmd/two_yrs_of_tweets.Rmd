@@ -23,7 +23,7 @@ In their very excellent book, [**Text Mining with R: A Tidy Approach**](http://t
 
 I'm literally following the [TidyText guide](http://tidytextmining.com/twitter.html), so just mosey over there for a step-by-step break down.
 
-```{r libraries, message=FALSE}
+```{r libraries, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(lubridate)
 library(scales)
@@ -137,7 +137,7 @@ tidy_tweets <- tweets %>%
 
 By using `unnest_tokens()`, I broke all of the non-re-tweet tweets down into individual words.
 
-```{r word frequency}
+```{r word frequency, message=FALSE, warning=FALSE}
 frequency <- tidy_tweets %>% 
   group_by(person) %>% 
   count(word, sort = TRUE) %>% 
@@ -150,10 +150,14 @@ library(pander)
 pandoc.table(top_n(frequency, 5), style = "rmarkdown")
 ```
 
+So, it looks like the things I tweet about most are R (`#rstats`), data visualization (`#dataviz`), data (and or stuff pertaining thereto), and heads-up-ing/poking/bugging [tcash](https://twitter.com/tanyacash21). All noble topics in their own right.
+
+Because we're looking at change over time and using ~months as our units of measure, let's filter out tweets from June, since the month's only half-way through.
+
 ```{r filter by date}
 tidy_tweets <- tidy_tweets %>%
   filter(timestamp >= as.Date("2016-05-1"),
-         timestamp < as.Date("2017-06-15"))
+         timestamp < as.Date("2017-06-1"))
 ```
 
 ```{r words by time}
@@ -168,19 +172,21 @@ words_by_time <- tidy_tweets %>%
   mutate(word_total = sum(n)) %>%
   ungroup() %>%
   rename(count = n) %>%
-  filter(word_total > 30)
+  filter(word_total > 30)  ## just words w/ 30+ mentions
 
 words_by_time
 ```
 
 ```{r nested data}
 nested_data <- words_by_time %>%
-  nest(-word, -person) 
+  nest(-word, -person)
 
 nested_data
 ```
 
-```{r nested models}
+For modeling `purrr`-poses (get it?), next we're gonna do a little bit of nesting.[^nesting]
+
+```{r nested models, message=FALSE, warning=FALSE}
 library(purrr)
 
 nested_models <- nested_data %>%
@@ -190,6 +196,8 @@ nested_models <- nested_data %>%
 nested_models
 ```
 
+Using David Robinson's package, `broom`, we can get the results of our nested models back into a nice and tidy format for further examination, and plotting.
+
 ```{r slopes}
 library(broom)
 
@@ -198,6 +206,8 @@ slopes <- nested_models %>%
   filter(term == "time_floor") %>%
   mutate(adjusted.p.value = p.adjust(p.value))
 ```
+
+Now let's take a look at the terms with the top slopes (in absolute value).
 
 ```{r top slopes}
 top_slopes <- slopes %>% 
@@ -224,7 +234,7 @@ words_by_time %>%
 sessionInfo()
 ```
 
-```{r thankr}
+```{r thankr, message=FALSE, warning=FALSE}
 library(thankr)
 thankees <- shoulders()
 library(DT)
@@ -246,3 +256,5 @@ praise::praise()
 [^4]: Also, as previously mentioned, I want to be super cool like Julia, and she did this for her [Ten Thousand Tweets](https://juliasilge.com/blog/ten-thousand-tweets/) analysis. So, there.
 
 [^word_freq]: Again, I'm still following [Tidy Text Mining with R](http://tidytextmining.com), specifically [*7.2 Word frequencies*](http://tidytextmining.com/twitter.html#word-frequencies-1) here.
+
+[^nesting]: This is very well explained in the [twitter-case-study section](http://tidytextmining.com/twitter.html) of [Tidy Text Mining with R](http://tidytextmining.com).
