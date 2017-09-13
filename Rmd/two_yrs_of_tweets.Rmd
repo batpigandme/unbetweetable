@@ -1,7 +1,7 @@
 ---
 title: "Two Years of Tweets"
 author: "Mara Averick"
-date: "2017-06-15"
+date: "2017-09-12"
 output: 
   html_document:
     keep_md: yes
@@ -53,7 +53,7 @@ We can take a look at our shiny new data frame using `glimpse()`.
 glimpse(tweets)
 ```
 
-The data go (temporally-speaking) from when I first tweeted, to when I downloaded the archive (2017-06-15). Let's find out when that first tweet went out. 
+The data go (temporally-speaking) from when I first tweeted, to when I downloaded the archive (2017-09-12). Let's find out when that first tweet went out. 
 
 ```{r min_timestamp}
 first_tweet <- tweets %>%
@@ -70,7 +70,7 @@ So, we've basically got two years and one month worth of tweets. Let's take a lo
 ggplot(tweets, aes(x = timestamp)) +
   geom_histogram(position = "identity", bins = 24, show.legend = FALSE, color = "white", alpha = 0.9) +
   labs(title = "@dataandme tweet volume",
-       caption = "Extracted from Twitter archive 2017-06-15") +  ## use labs w/ hrbrthemes
+       caption = "Extracted from Twitter archive 2017-09-12") +  ## use labs w/ hrbrthemes
   theme_ipsum_rc()
 ```
 
@@ -105,7 +105,7 @@ ggplot(data = tweets, aes(x = wday(timestamp, label = TRUE))) +
         theme(legend.position = "none") +
         labs(title = "@dataandme tweets by day of the week",
              x = "days of the week",
-             caption = "Extracted from Twitter archive 2017-06-15") +
+             caption = "Extracted from Twitter archive 2017-09-12") +
         theme_ipsum_rc()
 ```
 

@@ -1,10 +1,10 @@
 # Two Years of Tweets
 Mara Averick  
-2017-06-15  
+2017-09-12  
 
 
 
-Updated: 2017-09-03
+Updated: 2017-09-13
 
 ## Motivation
 
@@ -48,22 +48,22 @@ glimpse(tweets)
 ```
 
 ```
-## Observations: 16,026
+## Observations: 18,981
 ## Variables: 11
-## $ tweet_id                   <chr> "875337618539544577", "875337454655...
-## $ in_reply_to_status_id      <chr> NA, "844184322970173440", NA, "8751...
-## $ in_reply_to_user_id        <chr> NA, "15496407", NA, "16047639", NA,...
-## $ timestamp                  <dttm> 2017-06-15 13:02:05, 2017-06-15 13...
-## $ source                     <chr> "<a href=\"http://bufferapp.com\" r...
-## $ text                       <chr> "Make some awesome #maps w/ ease: \...
-## $ retweeted_status_id        <chr> NA, NA, NA, NA, "875058163309056000...
-## $ retweeted_status_user_id   <chr> NA, NA, NA, NA, "20963651", NA, NA,...
-## $ retweeted_status_timestamp <dttm> NA, NA, NA, NA, 2017-06-14 18:31:3...
-## $ expanded_urls              <chr> "http://buff.ly/2rzl9CW,https://twi...
+## $ tweet_id                   <chr> "907582592282656768", "907572274353...
+## $ in_reply_to_status_id      <chr> "907578542698803200", "907569442569...
+## $ in_reply_to_user_id        <chr> "2260650739", "18255672", "55667378...
+## $ timestamp                  <dttm> 2017-09-12 12:32:06, 2017-09-12 11...
+## $ source                     <chr> "<a href=\"http://twitter.com\" rel...
+## $ text                       <chr> "@crude2refined I love the ggthemes...
+## $ retweeted_status_id        <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ retweeted_status_user_id   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ retweeted_status_timestamp <dttm> NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ expanded_urls              <chr> NA, NA, "https://twitter.com/dataan...
 ## $ person                     <chr> "Mara", "Mara", "Mara", "Mara", "Ma...
 ```
 
-The data go (temporally-speaking) from when I first tweeted, to when I downloaded the archive (2017-06-15). Let's find out when that first tweet went out. 
+The data go (temporally-speaking) from when I first tweeted, to when I downloaded the archive (2017-09-12). Let's find out when that first tweet went out. 
 
 
 ```r
@@ -89,7 +89,7 @@ So, we've basically got two years and one month worth of tweets. Let's take a lo
 ggplot(tweets, aes(x = timestamp)) +
   geom_histogram(position = "identity", bins = 24, show.legend = FALSE, color = "white", alpha = 0.9) +
   labs(title = "@dataandme tweet volume",
-       caption = "Extracted from Twitter archive 2017-06-15") +  ## use labs w/ hrbrthemes
+       caption = "Extracted from Twitter archive 2017-09-12") +  ## use labs w/ hrbrthemes
   theme_ipsum_rc()
 ```
 
@@ -131,7 +131,7 @@ ggplot(data = tweets, aes(x = wday(timestamp, label = TRUE))) +
         theme(legend.position = "none") +
         labs(title = "@dataandme tweets by day of the week",
              x = "days of the week",
-             caption = "Extracted from Twitter archive 2017-06-15") +
+             caption = "Extracted from Twitter archive 2017-09-12") +
         theme_ipsum_rc()
 ```
 
@@ -149,7 +149,7 @@ chisq.test(table(wday(tweets$timestamp, label = TRUE)))
 ## 	Chi-squared test for given probabilities
 ## 
 ## data:  table(wday(tweets$timestamp, label = TRUE))
-## X-squared = 50.16, df = 6, p-value = 4.366e-09
+## X-squared = 43.473, df = 6, p-value = 9.403e-08
 ```
 
 Well well well... Looks _can_ be deceiving.
@@ -194,11 +194,11 @@ pandoc.table(top_n(frequency, 5), style = "rmarkdown")
 ## 
 ## | person |     word     |  n   | total  |   freq   |
 ## |:------:|:------------:|:----:|:------:|:--------:|
-## |  Mara  |   #rstats    | 1697 | 109702 | 0.01547  |
-## |  Mara  |   #dataviz   | 1427 | 109702 | 0.01301  |
-## |  Mara  |     data     | 1015 | 109702 | 0.009252 |
-## |  Mara  |    icymi     | 482  | 109702 | 0.004394 |
-## |  Mara  | @tanyacash21 | 459  | 109702 | 0.004184 |
+## |  Mara  |   #rstats    | 2107 | 134088 | 0.01571  |
+## |  Mara  |   #dataviz   | 1563 | 134088 | 0.01166  |
+## |  Mara  |     data     | 1159 | 134088 | 0.008644 |
+## |  Mara  |    icymi     | 590  | 134088 |  0.0044  |
+## |  Mara  | @tanyacash21 | 504  | 134088 | 0.003759 |
 ```
 
 So, it looks like the things I tweet about most are R (`#rstats`), data visualization (`#dataviz`), data (and or stuff pertaining thereto), and heads-up-ing/poking/bugging [tcash](https://twitter.com/tanyacash21). All noble topics in their own right.
@@ -367,8 +367,8 @@ library(DT)
 datatable(thankees)
 ```
 
-<!--html_preserve--><div id="htmlwidget-892125714a157d1ab641" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-892125714a157d1ab641">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37"],["Hadley Wickham &lt;hadley@rstudio.com&gt;","R Core Team &lt;R-core@r-project.org&gt;","Kirill Müller &lt;krlmlr+r@mailbox.org&gt;","Winston Chang &lt;winston@stdout.org&gt;","Lionel Henry &lt;lionel@rstudio.com&gt;","Julia Silge &lt;julia.silge@gmail.com&gt;","Yihui Xie &lt;xie@yihui.name&gt;","Dirk Eddelbuettel &lt;edd@debian.org&gt;","JJ Allaire &lt;jj@rstudio.com&gt;","Bob Rudis &lt;bob@rud.is&gt;","Gergely Daróczi &lt;daroczig@rapporter.net&gt;","Hadley Wickham &lt;h.wickham@gmail.com&gt;","Deepayan Sarkar &lt;deepayan.sarkar@r-project.org&gt;","Achim Zeileis &lt;Achim.Zeileis@R-project.org&gt;","Milan Bouchet-Valat &lt;nalimilan@club.fr&gt;","Joe Cheng &lt;joe@rstudio.com&gt;","Jeremy Stephens &lt;jeremy.stephens@vanderbilt.edu&gt;","R Core Team &lt;R-core@R-project.org&gt;","Jim Hester &lt;james.f.hester@gmail.com&gt;","Jennifer Bryan &lt;jenny@rstudio.com&gt;","Charlotte Wickham &lt;cwickham@gmail.com&gt;","Jennifer Bryan &lt;jenny@stat.ubc.ca&gt;","William Revelle &lt;revelle@northwestern.edu&gt;","Justin Talbot &lt;justintalbot@gmail.com&gt;","Lincoln Mullen &lt;lincoln@lincolnmullen.com&gt;","David Robinson &lt;admiral.david@gmail.com&gt;","Jim Hester &lt;james.hester@rstudio.com&gt;","Michel Lang &lt;michellang@gmail.com&gt;","Jeroen Ooms &lt;jeroen@berkeley.edu&gt;","Adelchi Azzalini &lt;adelchi.azzalini@unipd.it&gt;","Marek Gagolewski &lt;gagolews@rexamine.com&gt;","Stefan Milton Bache &lt;stefan@stefanbache.dk&gt;","Gábor Csárdi &lt;csardi.gabor@gmail.com&gt;","Martin Maechler &lt;mmaechler+Matrix@gmail.com&gt;","James Hester &lt;james.hester@rstudio.com&gt;","Vitalie Spinu &lt;spinuvit@gmail.com&gt;","R-core &lt;R-core@R-project.org&gt;"],[15,11,5,4,3,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],["assertthat, dplyr, forcats, ggplot2, gtable, haven, httr, lazyeval, modelr, plyr, rvest, scales, stringr, tidyr, tidyverse","base, compiler, datasets, graphics, grDevices, grid, methods, parallel, stats, tools, utils","bindr, bindrcpp, hms, rprojroot, tibble","extrafont, extrafontdb, R6, Rttf2pt1","purrr, rlang, tidyselect","janeaustenr, tidytext","evaluate, knitr","digest, Rcpp","rmarkdown, rstudioapi","hrbrthemes","pander","reshape2","lattice","colorspace","SnowballC","htmltools","yaml","foreign","glue","readxl","munsell","cellranger","psych","labeling","tokenizers","broom","readr","backports","jsonlite","mnormt","stringi","magrittr","pkgconfig","Matrix","xml2","lubridate","nlme"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>maintainer<\/th>\n      <th>no_packages<\/th>\n      <th>packages<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"crosstalkOptions":{"key":null,"group":null},"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-58984bd7b2c79fc8b9b8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-58984bd7b2c79fc8b9b8">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37"],["Hadley Wickham &lt;hadley@rstudio.com&gt;","R Core Team &lt;R-core@r-project.org&gt;","Kirill Müller &lt;krlmlr+r@mailbox.org&gt;","Winston Chang &lt;winston@stdout.org&gt;","Lionel Henry &lt;lionel@rstudio.com&gt;","Julia Silge &lt;julia.silge@gmail.com&gt;","Yihui Xie &lt;xie@yihui.name&gt;","Dirk Eddelbuettel &lt;edd@debian.org&gt;","JJ Allaire &lt;jj@rstudio.com&gt;","Bob Rudis &lt;bob@rud.is&gt;","Gergely Daróczi &lt;daroczig@rapporter.net&gt;","Hadley Wickham &lt;h.wickham@gmail.com&gt;","Deepayan Sarkar &lt;deepayan.sarkar@r-project.org&gt;","Achim Zeileis &lt;Achim.Zeileis@R-project.org&gt;","Milan Bouchet-Valat &lt;nalimilan@club.fr&gt;","Joe Cheng &lt;joe@rstudio.com&gt;","Jeremy Stephens &lt;jeremy.stephens@vanderbilt.edu&gt;","R Core Team &lt;R-core@R-project.org&gt;","Jim Hester &lt;james.f.hester@gmail.com&gt;","Jennifer Bryan &lt;jenny@rstudio.com&gt;","Charlotte Wickham &lt;cwickham@gmail.com&gt;","Jennifer Bryan &lt;jenny@stat.ubc.ca&gt;","William Revelle &lt;revelle@northwestern.edu&gt;","Justin Talbot &lt;justintalbot@gmail.com&gt;","Lincoln Mullen &lt;lincoln@lincolnmullen.com&gt;","David Robinson &lt;admiral.david@gmail.com&gt;","Jim Hester &lt;james.hester@rstudio.com&gt;","Michel Lang &lt;michellang@gmail.com&gt;","Jeroen Ooms &lt;jeroen@berkeley.edu&gt;","Adelchi Azzalini &lt;adelchi.azzalini@unipd.it&gt;","Marek Gagolewski &lt;gagolews@rexamine.com&gt;","Stefan Milton Bache &lt;stefan@stefanbache.dk&gt;","Gábor Csárdi &lt;csardi.gabor@gmail.com&gt;","Martin Maechler &lt;mmaechler+Matrix@gmail.com&gt;","James Hester &lt;james.hester@rstudio.com&gt;","Vitalie Spinu &lt;spinuvit@gmail.com&gt;","R-core &lt;R-core@R-project.org&gt;"],[15,11,5,4,3,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],["assertthat, dplyr, forcats, ggplot2, gtable, haven, httr, lazyeval, modelr, plyr, rvest, scales, stringr, tidyr, tidyverse","base, compiler, datasets, graphics, grDevices, grid, methods, parallel, stats, tools, utils","bindr, bindrcpp, hms, rprojroot, tibble","extrafont, extrafontdb, R6, Rttf2pt1","purrr, rlang, tidyselect","janeaustenr, tidytext","evaluate, knitr","digest, Rcpp","rmarkdown, rstudioapi","hrbrthemes","pander","reshape2","lattice","colorspace","SnowballC","htmltools","yaml","foreign","glue","readxl","munsell","cellranger","psych","labeling","tokenizers","broom","readr","backports","jsonlite","mnormt","stringi","magrittr","pkgconfig","Matrix","xml2","lubridate","nlme"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>maintainer<\/th>\n      <th>no_packages<\/th>\n      <th>packages<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"crosstalkOptions":{"key":null,"group":null},"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
 
 
 ```r
@@ -377,7 +377,7 @@ praise::praise()
 ```
 
 ```
-## [1] "You are mathematical!"
+## [1] "You are glorious!"
 ```
 
 
