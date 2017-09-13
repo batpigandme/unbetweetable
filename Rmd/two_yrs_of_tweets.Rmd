@@ -222,7 +222,8 @@ words_by_time %>%
   ggplot(aes(time_floor, count/time_total, color = word)) +
   geom_line(size = 1) +
   labs(title = "Trending words in @dataandme tweets", 
-       x = NULL, y = "Word frequency") +
+       x = NULL, y = "Word frequency",
+       caption = "Extracted from Twitter archive 2017-09-12") +
   theme_ipsum_rc()
 ```
 
